@@ -1,16 +1,11 @@
 
+import json
+import requests
 from pynput import keyboard
 from pynput.keyboard import Key
 
-
-def controller(key):
-    pass
-
-def server():
-    pass
-
-def gui():
-    pass
+SERVER_URL      = "localhost"
+SERVER_PORT     = "10000"
 
 class Client():
 
@@ -31,10 +26,10 @@ class Client():
     """
     communication protocal:
     {
-        "gameId": gameid,
-        "userId": userid,
+        "gameID": gameid,
+        "userID": userid,
         "action": action,
-        "curGameMap": gameMap
+        "gameMetrix": gameMetrix
     }
     **action** :
     space   ->  0
@@ -52,7 +47,17 @@ class Client():
             self.send_action(action)
 
     def send_action(self, action):
-        pass
+        req_data = {
+            "gameID": self.game_id,
+            "userID": self.user_id,
+            "action": action,
+            "gameMetrix": self.tetris_metrix
+        }
+        URL = "http://" + SERVER_URL + ":" + SERVER_PORT
+        r = requests.post(URL, data=json.dumps(req_data))
+
+        # TODO
+        print(r.text)
 
     def init_network(self):
         pass
@@ -60,6 +65,9 @@ class Client():
     def init_game_info(self):
         self.game_id = "gameid"
         self.user_id = "userid"
+
+        self.tetris_metrix = []
+
 
     def init_keyboard(self):
         self.key_map = {
