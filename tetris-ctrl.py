@@ -4,7 +4,7 @@ from pynput.keyboard import Key
 
 def on_press(key):
     if key == Key.esc:
-        keyboard.Listener.stop()
+        keyboard.Listener.stop(None)
     try:
         print("key {0} pressed".format(key.char))
     except AttributeError:
